@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bajaj Finserv Health Qualifier - SQL Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        .sql-query {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .result {
+            background: #27ae60;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .data-table th {
+            background-color: #3498db;
+            color: white;
+        }
+        .data-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .highlight {
+            background-color: #f39c12;
+            color: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .analysis {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Bajaj Finserv Health Qualifier - SQL Problem Demo</h1>
+        
+        <h2>📋 Problem Statement</h2>
+        <p>Find the highest salary that was credited to an employee, but only for transactions that were <strong>NOT</strong> made on the 1st day of any month. Include employee name, age, and department.</p>
+        
+        <h2>🎯 Your Registration Number: REG12347</h2>
+        <p>Last digit: <span class="highlight">7</span> (ODD) → Will solve <strong>Question 1</strong></p>
+        
+        <h2>🗄️ Database Tables</h2>
+        
+        <h3>DEPARTMENT Table</h3>
+        <table class="data-table">
+            <tr><th>DEPARTMENT_ID</th><th>DEPARTMENT_NAME</th></tr>
+            <tr><td>1</td><td>HR</td></tr>
+            <tr><td>2</td><td>Finance</td></tr>
+            <tr><td>3</td><td>Engineering</td></tr>
+            <tr><td>4</td><td>Sales</td></tr>
+            <tr><td>5</td><td>Marketing</td></tr>
+            <tr><td>6</td><td>IT</td></tr>
+        </table>
+        
+        <h3>EMPLOYEE Table</h3>
+        <table class="data-table">
+            <tr><th>EMP_ID</th><th>FIRST_NAME</th><th>LAST_NAME</th><th>DOB</th><th>GENDER</th><th>DEPARTMENT</th></tr>
+            <tr><td>1</td><td>John</td><td>Williams</td><td>1980-05-15</td><td>Male</td><td>3</td></tr>
+            <tr><td>2</td><td>Sarah</td><td>Johnson</td><td>1990-07-20</td><td>Female</td><td>2</td></tr>
+            <tr><td>3</td><td>Michael</td><td>Smith</td><td>1985-02-10</td><td>Male</td><td>3</td></tr>
+            <tr><td>4</td><td>Emily</td><td>Brown</td><td>1992-11-30</td><td>Female</td><td>4</td></tr>
+            <tr><td>5</td><td>David</td><td>Jones</td><td>1988-09-05</td><td>Male</td><td>5</td></tr>
+            <tr><td>6</td><td>Olivia</td><td>Davis</td><td>1995-04-12</td><td>Female</td><td>1</td></tr>
+            <tr><td>7</td><td>James</td><td>Wilson</td><td>1983-03-25</td><td>Male</td><td>6</td></tr>
+            <tr><td>8</td><td>Sophia</td><td>Anderson</td><td>1991-08-17</td><td>Female</td><td>4</td></tr>
+            <tr><td>9</td><td>Liam</td><td>Miller</td><td>1979-12-01</td><td>Male</td><td>1</td></tr>
+            <tr><td>10</td><td>Emma</td><td>Taylor</td><td>1993-06-28</td><td>Female</td><td>5</td></tr>
+        </table>
+        
+        <h3>PAYMENTS Table</h3>
+        <table class="data-table">
+            <tr><th>PAYMENT_ID</th><th>EMP_ID</th><th>AMOUNT</th><th>PAYMENT_TIME</th><th>Day of Month</th></tr>
+            <tr><td>1</td><td>2</td><td>65784.00</td><td>2025-01-01 13:44:12</td><td class="highlight">1st</td></tr>
+            <tr><td>2</td><td>4</td><td>62736.00</td><td>2025-01-06 18:36:37</td><td>6th</td></tr>
+            <tr><td>3</td><td>1</td><td>69437.00</td><td>2025-01-01 10:19:21</td><td class="highlight">1st</td></tr>
+            <tr><td>4</td><td>3</td><td>67183.00</td><td>2025-01-02 17:21:57</td><td>2nd</td></tr>
+            <tr><td>5</td><td>2</td><td>66273.00</td><td>2025-02-01 11:49:15</td><td class="highlight">1st</td></tr>
+            <tr><td>6</td><td>5</td><td>71475.00</td><td>2025-01-01 07:24:14</td><td class="highlight">1st</td></tr>
+            <tr><td>7</td><td>1</td><td>70837.00</td><td>2025-02-03 19:11:31</td><td>3rd</td></tr>
+            <tr><td>8</td><td>6</td><td>69628.00</td><td>2025-01-02 10:41:15</td><td>2nd</td></tr>
+            <tr><td>9</td><td>4</td><td>71876.00</td><td>2025-02-01 12:16:47</td><td class="highlight">1st</td></tr>
+            <tr><td>10</td><td>3</td><td>70098.00</td><td>2025-02-03 10:11:17</td><td>3rd</td></tr>
+            <tr><td>11</td><td>6</td><td>67827.00</td><td>2025-02-02 19:21:27</td><td>2nd</td></tr>
+            <tr><td>12</td><td>5</td><td>69871.00</td><td>2025-02-05 17:54:17</td><td>5th</td></tr>
+            <tr><td>13</td><td>2</td><td>72984.00</td><td>2025-03-05 09:37:35</td><td>5th</td></tr>
+            <tr><td>14</td><td>1</td><td>67982.00</td><td>2025-03-01 06:09:51</td><td class="highlight">1st</td></tr>
+            <tr><td>15</td><td>6</td><td>70198.00</td><td>2025-03-02 10:34:35</td><td>2nd</td></tr>
+            <tr><td>16</td><td>4</td><td>74998.00</td><td>2025-03-02 09:27:26</td><td>2nd</td></tr>
+        </table>
+        
+        <h2>🔍 Analysis</h2>
+        <div class="analysis">
+            <h3>Payments NOT on 1st day of month:</h3>
+            <ul>
+                <li>Payment ID 2: 62736.00 (2025-01-06) - Sarah Johnson</li>
+                <li>Payment ID 4: 67183.00 (2025-01-02) - Michael Smith</li>
+                <li>Payment ID 7: 70837.00 (2025-02-03) - John Williams</li>
+                <li>Payment ID 8: 69628.00 (2025-01-02) - Olivia Davis</li>
+                <li>Payment ID 10: 70098.00 (2025-02-03) - Michael Smith</li>
+                <li>Payment ID 11: 67827.00 (2025-02-02) - Olivia Davis</li>
+                <li>Payment ID 12: 69871.00 (2025-02-05) - David Jones</li>
+                <li>Payment ID 13: 72984.00 (2025-03-05) - Sarah Johnson</li>
+                <li>Payment ID 15: 70198.00 (2025-03-02) - Olivia Davis</li>
+                <li><strong>Payment ID 16: 74998.00 (2025-03-02) - Emily Brown</strong></li>
+            </ul>
+            <p><strong>Highest salary NOT on 1st day: 74998.00</strong></p>
+        </div>
+        
+        <h2>💻 SQL Query (Question 1 - Odd RegNo)</h2>
+        <div class="sql-query">SELECT 
+    p.AMOUNT AS SALARY, 
+    CONCAT(e.FIRST_NAME, ' ', e.LAST_NAME) AS NAME, 
+    YEAR(CURDATE()) - YEAR(e.DOB) AS AGE, 
+    d.DEPARTMENT_NAME 
+FROM PAYMENTS p 
+JOIN EMPLOYEE e ON p.EMP_ID = e.EMP_ID 
+JOIN DEPARTMENT d ON e.DEPARTMENT = d.DEPARTMENT_ID 
+WHERE DAY(p.PAYMENT_TIME) != 1 
+ORDER BY p.AMOUNT DESC 
+LIMIT 1;</div>
+        
+        <h2>🎯 Expected Result</h2>
+        <div class="result">
+            <table class="data-table">
+                <tr><th>SALARY</th><th>NAME</th><th>AGE</th><th>DEPARTMENT_NAME</th></tr>
+                <tr><td>74998.00</td><td>Emily Brown</td><td>32</td><td>Sales</td></tr>
+            </table>
+        </div>
+        
+        <h2>🚀 Application Flow</h2>
+        <div class="analysis">
+            <ol>
+                <li><strong>Startup:</strong> Application automatically triggers qualifier flow</li>
+                <li><strong>Webhook Generation:</strong> POST to generateWebhook/JAVA with your details</li>
+                <li><strong>SQL Solving:</strong> Generates the above SQL query (REG12347 = odd)</li>
+                <li><strong>Solution Submission:</strong> POST to testWebhook/JAVA with JWT token</li>
+                <li><strong>Success:</strong> Solution submitted successfully!</li>
+            </ol>
+        </div>
+        
+        <h2>📁 Project Files Ready</h2>
+        <div class="analysis">
+            <p>✅ Complete Spring Boot application created</p>
+            <p>✅ All Java classes and configurations ready</p>
+            <p>✅ Build scripts (build.bat, run.bat) created</p>
+            <p>✅ Documentation (README.md, SETUP.md) created</p>
+            <p>✅ Test files for validation</p>
+            <p>✅ Maven wrapper included</p>
+        </div>
+        
+        <h2>🔧 Next Steps</h2>
+        <div class="analysis">
+            <p><strong>To run the application:</strong></p>
+            <ol>
+                <li>Install Java 17+ from <a href="https://adoptium.net/" target="_blank">https://adoptium.net/</a></li>
+                <li>Run: <code>./mvnw.cmd clean package -DskipTests</code></li>
+                <li>Run: <code>java -jar target/health-qualifier-1.0.0.jar</code></li>
+                <li>Or use: <code>build.bat</code> then <code>run.bat</code></li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

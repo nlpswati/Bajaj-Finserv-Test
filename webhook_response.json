@@ -1,0 +1,4 @@
+﻿{
+    "webhook":  "https://bfhldevapigw.healthrx.co.in/hiring/testWebhook/JAVA",
+    "accessToken":  "eyJhbGciOiJIUzI1NiJ9.eyJyZWdObyI6IlJFRzEyMzQ3IiwibmFtZSI6IkpvaG4gRG9lIiwiZW1haWwiOiJqb2huQGV4YW1wbGUuY29tIiwic3ViIjoid2ViaG9vay11c2VyIiwiaWF0IjoxNzU2NDQ2NTQ4LCJleHAiOjE3NTY0NDc0NDh9.TU8zFADqOXz06jEgEQiTxCu_vrEzwhn-yG-1kjHRJxw"
+}
